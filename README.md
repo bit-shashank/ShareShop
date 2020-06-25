@@ -1,2 +1,2 @@
 # ShareShop
-An online network based shop
+An online network based shop api

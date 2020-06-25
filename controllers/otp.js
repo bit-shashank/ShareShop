@@ -4,24 +4,26 @@ const { text } = require('body-parser');
 
 
 /*
-    Test function to send SMS to a particular number
+    Test function to send OTP to a particular number
 */
 exports.send_otp=async(req,res)=>{
 
-    //Generating a random 4 digit number 
+    //Generating a random 6 digit random OTP 
     const ranOTP=Math.floor(100000 + Math.random() * 900000);
     const ttx=5*60*1000; // time to expire is 5 minutes 
 
-    //Creating a new OTP object
+    //Creating a new OTP document
     const otp=new OTP({
         mobileNo:req.params.mobileNo,
         otp:ranOTP,
         createdOn:Date.now(),
         expiresOn:Date.now()+ttx
     });
-
     try{
-        //Saving otp details in database
+        //Delete any past otp data with this number 
+        await OTP.deleteMany({mobileNo:req.params.mobileNo});
+
+        //Saving new OTP in database
         const savedOTP=otp.save();
 
         //Sending SMS to client
@@ -76,4 +78,9 @@ exports.verify_otp=async (req,res)=>{
 exports.get_all=async(req,res)=>{
     const data=await OTP.find();
     res.json(data);
+}
+
+exports.clear_all=async(req,res)=>{
+    const result=await OTP.deleteMany({});
+    res.json(result);
 }
