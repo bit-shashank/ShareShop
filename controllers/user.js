@@ -80,7 +80,7 @@ exports.signup=async(req,res)=>{
     if (tempUser2 && tempUser2.verified){
         //If a user exists simply return with a 409 status.
         return res.status(409).json({
-            message:'Someone already uses this mobile No'
+            message:'Mobile Number already taken'
         })
     }
 
