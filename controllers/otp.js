@@ -1,6 +1,7 @@
 const client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN); 
 const OTP=require('../models/otp');
 const { text } = require('body-parser');
+const User=require('../models/user');
 
 
 /*
@@ -58,9 +59,18 @@ exports.verify_otp=async (req,res)=>{
             const currTime=Date.now();
             const expiryTime=new Date(otp.expiresOn).getTime();
             if (currTime<expiryTime){
-                return res.status(200).json({
-                    "message":"OTP verified"
-                })
+                //Find and update user verfication status with this mobileNo
+                const result= await User.findOneAndUpdate({mobileNo:req.body.mobileNo},{verified:true},{useFindAndModify: false});
+                if(result!=null){
+                    return res.status(200).json({
+                        "message":"OTP verified",
+                        "user":result
+                    })
+                }else{
+                    return res.status(403).json({
+                        "message":"No user found"
+                    })
+                }
             }
         }
         res.status(401).json({

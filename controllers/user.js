@@ -1,6 +1,7 @@
 
 const User=require('../models/user');
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 
 
 
@@ -33,9 +34,20 @@ exports.login=async(req,res)=>{
         if(user){
             const match = await bcrypt.compare(req.body.password, user.password);
             if (match){
+                //Generating a JSON web token
+                const token=jwt.sign(
+                    {
+                        userId:user._id,
+                        mobileNo:user.mobileNo,
+                        username:user.username
+                    },
+                    process.env.JWT_SECRET_KEY,
+                    {expiresIn:"1h"}
+                );
                 return res.status(200).json({
                     "message":"Login Successfully",
-                    "user":user
+                    "user":user,
+                    "token":token
                 })
             }
         }  
@@ -63,6 +75,15 @@ exports.signup=async(req,res)=>{
         })
     }
 
+    //checking if an user already exists with this particular mobileNo and is verified
+    const tempUser2=await User.findOne({mobileNo:req.body.mobileNo});
+    if (tempUser2 && tempUser2.verified){
+        //If a user exists simply return with a 409 status.
+        return res.status(409).json({
+            message:'Someone already uses this mobile No'
+        })
+    }
+
     //Generating a hash for the user password
     const saltRounds=10;
     const hashPass = await bcrypt.hash(req.body.password, saltRounds);
@@ -74,13 +95,17 @@ exports.signup=async(req,res)=>{
         email:req.body.email,
         username:req.body.username,
         password:hashPass,
-        mobileNo:req.body.mobileNo
+        mobileNo:req.body.mobileNo,
+        verified:false
     });
 
     //Saving the user details in database
     try{
-        const data=await user.save();
-        res.json(data);
+        const savedData=await user.save();
+        res.status(200).json({
+            "message":"User Created Succesfully",
+            "user":savedData
+        });
     }
     catch(err){
         res.status(500).json({
@@ -101,4 +126,9 @@ exports.delete=async(req,res)=>{
     }
 }
 
+
+exports.clear_all=async(req,res)=>{
+    const result=await User.deleteMany({});
+    res.json(result);
+}
 
