@@ -2,12 +2,12 @@
 An online network based shop api
 
 
-- ## Basic Workflow for user registration 
-	- Step 1: User will register by providing there details
-	**Endpoint** :- */users/signup*
-	**Request** :- POST 
-	**Example**:- 
-	```json
+## Basic Workflow for user registration 
+- Step 1: User will register by providing there details
+**Endpoint** :- */users/signup*
+**Request** :- POST 
+**Example**:- 
+```json
 {
     "name":"Shashank Sahu",
     "email":"shashankcs083@gmail.com",
@@ -16,38 +16,38 @@ An online network based shop api
     "mobileNo":"+916307717161"
 }
 ```
-	**Response**:-  On successful account creation user data will be saved and a json response will be sended.
+**Response**:-  On successful account creation user data will be saved and a json response will be sended.
 
-	- Step 2:  Request to send otp to the user
-		**Endpoint**:- */otp/sendOTP/:mobileNo*
-		**Request **:- GET
-		**Example**:- /otp/sendOTP/+916307717161
+- Step 2:  Request to send otp to the user
+**Endpoint**:- */otp/sendOTP/:mobileNo*
+**Request **:- GET
+**Example**:- /otp/sendOTP/+916307717161
 
-	- Step 3: Verify the otp 
-	**Endpoint**:- */otp/verifyOTP*
-	**Request **:- POST
-	**Example**:- 
-	```json
+- Step 3: Verify the otp 
+**Endpoint**:- */otp/verifyOTP*
+**Request **:- POST
+**Example**:- 
+```json
 {
     "mobileNo":"+916307717161",
 	"otp":"123456"
 }
 ```
-	**Response**:- Appropriate JSON respond will be sended
-	
-	- Step 4:- User Login
-	**Endpoint** :- */users/login*
-	**Request**:- POST
-	**Example**:-
-	```json
+**Response**:- Appropriate JSON respond will be sended
+
+- Step 4:- User Login
+**Endpoint** :- */users/login*
+**Request**:- POST
+**Example**:-
+```json
 {
     "username":"NoobCoder",
     "password":"admin1234"
 }
 ```
-	**Response**:- A JSON WEB TOKEN(JWT) will be genrated and returned
+**Response**:- A JSON WEB TOKEN(JWT) will be genrated and returned
 
-## Utility Endpoints
+## Utility Endpoints for Developers
 
 - **/otp/clear** :- To delete all otp in database
 - **/users/clear** :- To delete all users
