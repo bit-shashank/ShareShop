@@ -4,9 +4,13 @@ An online network based shop api
 
 ## Basic Workflow for user registration 
 - Step 1: User will register by providing there details
+
 **Endpoint** :- */users/signup*
-**Request** :- POST 
-**Example**:- 
+
+**Request** :- POST
+
+**Example**:-
+
 ```json
 {
     "name":"Shashank Sahu",
@@ -19,9 +23,13 @@ An online network based shop api
 **Response**:-  On successful account creation user data will be saved and a json response will be sended.
 
 - Step 2:  Request to send otp to the user
+
 **Endpoint**:- */otp/sendOTP/:mobileNo*
+
 **Request**:- GET
+
 **Example**:- /otp/sendOTP/+916307717161
+
 
 - Step 3: Verify the otp 
 **Endpoint**:- */otp/verifyOTP*
@@ -36,9 +44,13 @@ An online network based shop api
 **Response**:- Appropriate JSON respond will be sended
 
 - Step 4:- User Login
+
 **Endpoint** :- */users/login*
+
 **Request**:- POST
+
 **Example**:-
+
 ```json
 {
     "username":"NoobCoder",
