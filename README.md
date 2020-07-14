@@ -1,6 +1,9 @@
 # ShareShop
 An online network based shop api
 
+## Note
+**This project is under development**
+
 ## Key Features
 - Otp Verification using Twilio
 - MongoDB Atlas integration
