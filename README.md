@@ -1,6 +1,11 @@
 # ShareShop
 An online network based shop api
 
+## Key Features
+- Otp Verification using Twilio
+- MongoDB Atlas integration
+- JSON web tokens(JWT) for security
+
 
 ## Basic Workflow for user registration 
 - Step 1: User will register by providing there details
